@@ -1,16 +1,16 @@
-use git2::{Repository, Signature, IndexAddOption};
+use git2::{Repository, Signature};
 use chrono::Local;
-use anyhow::{Anyhow, Result};
+use anyhow::{Result, anyhow};
 
-pub fn run_commit(massage_input: &str, commit_info: &str) ->Result<()> {
+pub fn run_commit(massage_type: &str, commit_info: &str) ->Result<()> {
     
     let repo = Repository::discover(".")
-        .map_err(|e| Anyhow::new(e).context("Not inside a git repository"))?;
+        .map_err(|e| anyhow!("Not inside a git repository"))?;
 
     let mut index = repo.index()?;
     
-    if index.is_empty() {
-        return Err(Anyhow!("No Staged files found"));
+    if index.len() == 0 {
+        return Err(anyhow!("No Staged files found"));
     }
 
     let tree_id = index.write_tree()?;
