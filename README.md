@@ -1,7 +1,10 @@
 # Git Rewang
 
-Git Rewang has a 
+<p align="center">
+  <img src="assets/gr-lg.png" alt="Preview"/>
+</p>
 
+Git Rewang is a lightweight CLI tool for developers who use multiple GitHub accounts. It streamlines commit, push, fetch, and pull operations with different identities, reducing the risk of committing with the wrong account.
 
 # Structure project
 
