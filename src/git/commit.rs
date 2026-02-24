@@ -2,10 +2,12 @@ use git2::{Repository, Signature};
 use chrono::Local;
 use anyhow::{Result, anyhow};
 
-pub fn run_commit(massage_type: &str, commit_info: &str) ->Result<()> {
+use crate::git::branch;
+
+pub fn run_commit(massage_input: &str, commit_type: &str) ->Result<()> {
     
     let repo = Repository::discover(".")
-        .map_err(|e| anyhow!("Not inside a git repository"))?;
+        .map_err(|_e| anyhow!("Not inside a git repository"))?;
 
     let mut index = repo.index()?;
     
@@ -17,7 +19,7 @@ pub fn run_commit(massage_type: &str, commit_info: &str) ->Result<()> {
     let tree = repo.find_tree(tree_id)?;
 
     let head = repo.head()?;
-    let brach_nama = head.shorthand().unwrap_or("Unknow");
+    let branch_name = head.shorthand().unwrap_or("Unknow");
 
     let now = Local::now().format("%Y-%m-%d %H:%M:%S");
     let commit_message = format!("{}: {}\n\nbrach: {}\ndate: {}", commit_type, massage_input, branch_name, now);
@@ -32,10 +34,18 @@ pub fn run_commit(massage_type: &str, commit_info: &str) ->Result<()> {
 
     match parent_commit {
         Some(parent) => {
-            repo.commit(Some("HEAD"), &signature, &signature, &commit_message, &tree, &[&parent])?;
+            repo.commit(Some("HEAD"),
+            &signature,
+            &signature,
+            &commit_message,
+            &tree, &[&parent])?;
         },
         None => {
-            repo.commit(Some("HEAD"), &signature, &signature, &commit_message, &tree, &[])?;
+            repo.commit(Some("HEAD"),
+            &signature,
+            &signature,
+            &commit_message,
+            &tree, &[])?;
         }
     }
 
