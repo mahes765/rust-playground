@@ -61,10 +61,10 @@ Print result
 Contoh:
 
 ```
-git-helper commit
-git-helper commit -t feat
-git-helper clean-branches
-git-helper status
+git-rewang commit "message" -t feat     # Commit dengan template
+git-rewang status                       # Status ringkas
+git-rewang clean-branches               # Hapus branch yang sudah merged
+git-rewang list-branches                # List semua branch lokal
 ```
 
 CLI parser cocok:

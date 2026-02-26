@@ -1,0 +1,21 @@
+# Git Rewang Configuration File
+# Place this file in your project root or ~/.config/git-helper/config.toml
+
+# Default branch for merge checking
+default_branch = "main"
+
+# Commit type templates
+# Use {message}, {branch}, {date} as placeholders
+[commit_types]
+feat = "✨ feat: {message}"
+fix = "🐛 fix: {message}"
+docs = "📝 docs: {message}"
+style = "💄 style: {message}"
+refactor = "♻️ refactor: {message}"
+test = "✅ test: {message}"
+chore = "🔧 chore: {message}"
+
+# Optional: User configuration for commits
+# [user]
+# name = "Your Name"
+# email = "your.email@example.com"

@@ -1,14 +1,16 @@
 [package]
-name = "test_app"
+name = "git-rewang"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
+description = "A lightweight CLI tool for developers who use multiple GitHub accounts"
+authors = ["Git Rewang Team"]
 
 [dependencies]
 anyhow = "1.0.102"
-axum = "0.8.8"
 chrono = "0.4.43"
+clap = { version = "4.4", features = ["derive"] }
 colored = "3.1.1"
 dirs = "6.0.0"
 git2 = "0.20.4"
-serde = {version = "1.0.228", features = ["derive"]}
-tokio = { version = "1.49.0", features = ["full"] }
+serde = { version = "1.0.228", features = ["derive"] }
+toml = "0.8"
