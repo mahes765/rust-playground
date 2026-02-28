@@ -10,8 +10,21 @@ pub fn run_commit(message_input: &str, commit_type: &str) -> Result<()> {
     
     let mut index = repo.index()?;
     
-    if index.len() == 0 {
-        return Err(anyhow!("No staged files found. Use 'git add' first."));
+    // Check if there are staged changes
+    let statuses = repo.statuses(None)?;
+    let has_staged_changes = statuses.iter().any(|entry| {
+        let status = entry.status();
+        status.intersects(
+            git2::Status::INDEX_NEW |
+            git2::Status::INDEX_MODIFIED |
+            git2::Status::INDEX_DELETED |
+            git2::Status::INDEX_RENAMED |
+            git2::Status::INDEX_TYPECHANGE
+        )
+    });
+    
+    if !has_staged_changes {
+        return Err(anyhow!("Nothing to commit. No staged changes found.\nUse 'git add <file>' to stage changes first."));
     }
 
     let tree_id = index.write_tree()?;
@@ -30,6 +43,13 @@ pub fn run_commit(message_input: &str, commit_type: &str) -> Result<()> {
         Some(oid) => Some(repo.find_commit(oid)?),
         None => None,
     };
+    
+    // Check if the new tree is the same as parent tree (no actual changes)
+    if let Some(ref parent) = parent_commit {
+        if parent.tree_id() == tree_id {
+            return Err(anyhow!("Nothing to commit. The staged files have no changes compared to the last commit."));
+        }
+    }
 
     match parent_commit {
         Some(parent) => {

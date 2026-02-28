@@ -32,13 +32,13 @@ fn default_branch() -> String {
 impl Default for Config {
     fn default() -> Self {
         let mut commit_types = HashMap::new();
-        commit_types.insert("feat".to_string(), "✨ feat: {message}".to_string());
-        commit_types.insert("fix".to_string(), "🐛 fix: {message}".to_string());
-        commit_types.insert("docs".to_string(), "📝 docs: {message}".to_string());
-        commit_types.insert("style".to_string(), "💄 style: {message}".to_string());
-        commit_types.insert("refactor".to_string(), "♻️ refactor: {message}".to_string());
-        commit_types.insert("test".to_string(), "✅ test: {message}".to_string());
-        commit_types.insert("chore".to_string(), "🔧 chore: {message}".to_string());
+        commit_types.insert("feat".to_string(), "feat: {message}".to_string());
+        commit_types.insert("fix".to_string(), "fix: {message}".to_string());
+        commit_types.insert("docs".to_string(), "docs: {message}".to_string());
+        commit_types.insert("style".to_string(), "style: {message}".to_string());
+        commit_types.insert("refactor".to_string(), "refactor: {message}".to_string());
+        commit_types.insert("test".to_string(), "test: {message}".to_string());
+        commit_types.insert("chore".to_string(), "chore: {message}".to_string());
         
         Config {
             default_branch: default_branch(),
